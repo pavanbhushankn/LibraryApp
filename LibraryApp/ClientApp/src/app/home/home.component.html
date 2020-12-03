@@ -1,0 +1,60 @@
+<h1>Library App</h1>
+<p>Welcome to your new single-page application for accessing books online</p>
+
+<hr />
+
+<h1>Available books are below</h1>
+
+<div *ngIf="loader">Loading....</div>
+
+<h4>Search by</h4>
+
+<div *ngIf="countryCheck">
+
+<div class="row searchbar">
+  <div class="col-m-4 col-sm-4">
+
+    <select [(ngModel)]="searchProp" class="form-control" style="height: 35px;">
+      <option value="undefined" selected>Search By</option>
+      <option [value]="criteria" *ngFor="let criteria  of criteriaList">
+        {{criteria}}
+      </option>
+    </select>
+  </div>
+  <div class="col-m-4 col-sm-4">
+    <input type="text" class="form-control" placeholder="Search value" [(ngModel)]="searchText"
+           style="height: 35px;">
+   
+  </div>
+
+  <div class="col-m-4 col-sm-4">
+    <div class="input-group-append">
+      <button class="btn btn-success" type="submit" style="height: 35px;" (click)="searchbook()">Go</button>
+      <button class="btn btn-success" type="submit" style="margin-left: 10px; height: 35px;" (click)="clearCriteria()">Clear</button>
+    </div>
+  </div>
+
+  </div>
+
+
+
+
+<div class="row booksection" *ngIf="!loader">
+  <div class="col custcards " *ngFor="let book of books | bookFilter:selectedCriteria ">
+    <p>Book Name: {{book.name}}</p>
+    <p>Author: {{book.author}}</p>
+    
+    <div [ngSwitch]="book.isAvailable">
+      <p *ngSwitchCase="true">Stock: In stock</p>
+      <p *ngSwitchCase="false">Stock: Not available</p>
+      
+    </div>
+  </div>
+
+</div>
+  </div>
+<div *ngIf="!countryCheck">
+  <p>Not accessible in your location</p> 
+</div>
+
+
